@@ -20,18 +20,18 @@ The compendium follows the college's course numbering:
 | 1 | Christology — The Person and Work of Jesus Christ | Pages document | Complete |
 | 2 | Pneumatology — The Holy Spirit | PDF (18 pages) | Complete |
 | 3 | Hamartiology — The Doctrine of Sin | Word textbook (11 chapters) | Complete |
-| 4 | Ecclesiology — The Doctrine of the Church | — | Placeholder (no notes yet) |
-| 5 | OT & NT Survey — The Bible Panorama | Photographed wall chart + notes | Complete |
+| 4 | Ecclesiology — The Doctrine of the Church | PDF (Doctrine of Ecclesiology + Officers of the Local Church) | Complete |
+| 5 | OT & NT Survey — The Bible Panorama | Photographed wall chart + notes + timeline PDF | Complete |
 | 6 | Bibliology — The Doctrine of the Bible | PowerPoint (56 slides) | Complete |
 | 7 | Theology Proper — The Doctrine of God | Word notes | Complete |
 | 7 | The Trinity | Word notes (6 lessons) | Complete |
 | 8 | Angelology — The Doctrine of Angels | Word notes (12 sections) | Complete |
 | 9 | Anthropology — The Doctrine of Man | Word textbook (9 chapters) | Complete |
 | 10 | Soteriology — The Doctrine of Salvation | Word textbook (7 chapters) | Complete |
-| 11 | Eschatology — The Doctrine of Last Things | — | Placeholder (no notes yet) |
-| Q | Question Bank | Authored from the notes | 358 questions |
+| 11 | Eschatology — The Doctrine of Last Things | PDF (Bible Doctrine Survey, ch. 10) | Complete |
+| Q | Question Bank | Authored from the notes | 3,035 questions |
 
-All tables from the source documents are preserved (divine titles, OT types, messianic prophecies, the four church councils, canonicity tests, ancient-manuscript comparison, Holy Spirit attributes and symbols, and more).
+All tables from the source documents are preserved (divine titles, OT types, messianic prophecies, the four church councils, canonicity tests, ancient-manuscript comparison, Holy Spirit attributes and symbols, the chronological Bible history timeline, and more).
 
 ### OT & NT Survey (section 5)
 
@@ -43,9 +43,11 @@ The survey is built from the Bible Panorama wall chart, photographed in 11 panel
 
 Dating follows the chart's own early-date chronology (e.g. 1446 BC exodus), with the alternative late date noted where relevant.
 
+A 12th section adds a **Chronological Timeline of Major Bible History** — a conservative, single-table chronology running from Creation (c. 4000 BC) through the death of the Apostle John (c. AD 100), plus a "Biblical Eras at a Glance" summary table.
+
 ### Question Bank (final section)
 
-358 short questions with answers covering every chapter of all nine completed subjects: Christology 65 · Bibliology 54 · Soteriology 49 · Hamartiology 45 · Pneumatology 35 · Anthropology 35 · Angelology 33 · Trinity 22 · Theology Proper 20.
+3,035 short questions with answers covering every chapter of all twelve subjects: Christology 250 · Pneumatology 250 · Hamartiology 250 · Ecclesiology 250 · OT & NT Survey 250 · Bibliology 250 · Theology Proper 250 · Trinity 250 · Angelology 250 · Anthropology 285 · Soteriology 250 · Eschatology 250.
 
 ---
 
@@ -87,7 +89,7 @@ These files can be copied to a phone, shared over WhatsApp, hosted on any static
 
 The page is generated from the source documents (Word, PowerPoint, Pages, PDF); it is not meant to be edited by hand.
 
-- **Adding Ecclesiology / Eschatology / new notes:** provide the source document and the compendium can be regenerated with the new subject slotted into its numbered position (the greyed sidebar placeholders are already reserved).
+- **Adding a new subject or panel:** provide the source document and the compendium can be regenerated with the new subject slotted into its numbered position, its own Question Bank section added, and the sidebar/total counts updated to match.
 - **Correcting content:** correct the source document and regenerate, so the source files remain the single point of truth.
 - **Replacing survey photos:** panels 8 and 9 were photographed at an angle around a wall corner; straight-on replacements can be swapped in when available.
 
