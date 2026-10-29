@@ -1,0 +1,729 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Six-Day Gym Plan</title>
+<meta name="description" content="A 6-day home-gym program for a couple, built around a Smith machine, cable tower, pec-deck, plate-loaded press and leg machine, with modifications for sore feet and a sore lower back.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Roboto+Mono:wght@500;600&display=swap">
+<style>
+/*
+  Layout concept: a gym logbook — equipment chips up top, then two
+  tabbed weekly schedules (Issac / Wife), each a strip of six day
+  buttons revealing one exercise table at a time, like flipping pages
+  on a clipboard. Colors borrow from the rig itself: black machine
+  frames, amber/rust accents (the red press arms, yellow weight pegs),
+  teal-green for pull/lower work, brick for caution callouts.
+*/
+:root{
+  --bg:#eef1ee; --surface:#ffffff; --surface-2:#e4e8e3; --fg:#1d2420; --muted:#59645d;
+  --line:#d4d9d1; --accent:#c2652e; --accent-ink:#ffffff; --accent-2:#2f6f62;
+  --danger:#b23b3b; --danger-bg:#f7e9e5; --chip-bg:#1d2420; --chip-fg:#eef1ee;
+  --radius:14px; --shadow:0 1px 2px rgba(20,24,20,.06),0 8px 24px -16px rgba(20,24,20,.25);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#14181a; --surface:#1d2224; --surface-2:#262c2d; --fg:#eceeec; --muted:#9aa39c;
+    --line:#333b3b; --accent:#e2884a; --accent-ink:#191310; --accent-2:#4a9c8a;
+    --danger:#e2766a; --danger-bg:#3a2320; --chip-bg:#2a3230; --chip-fg:#e7ebe6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14181a; --surface:#1d2224; --surface-2:#262c2d; --fg:#eceeec; --muted:#9aa39c;
+  --line:#333b3b; --accent:#e2884a; --accent-ink:#191310; --accent-2:#4a9c8a;
+  --danger:#e2766a; --danger-bg:#3a2320; --chip-bg:#2a3230; --chip-fg:#e7ebe6;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"Source Sans 3",system-ui,sans-serif;line-height:1.5;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));}
+h1,h2,h3{font-family:"Oswald",sans-serif;text-transform:uppercase;letter-spacing:.02em;text-wrap:balance;margin:0}
+.wrap{max-width:860px;margin:0 auto;padding-block:28px 56px}
+.eyebrow{font-family:"Roboto Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600}
+h1{font-size:clamp(28px,5.5vw,42px);margin-top:6px}
+.sub{color:var(--muted);max-width:60ch;margin-top:10px;font-size:15.5px}
+
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+@media (max-width:560px){.stats{grid-template-columns:1fr}}
+.stat-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.stat-card h3{font-size:16px;margin-bottom:8px}
+.stat-row{display:flex;justify-content:space-between;font-family:"Roboto Mono",monospace;font-variant-numeric:tabular-nums;font-size:13.5px;color:var(--muted);padding:3px 0;border-bottom:1px dashed var(--line)}
+.stat-row:last-of-type{border-bottom:none}
+.stat-row b{color:var(--fg);font-weight:600}
+.goal{margin-top:10px;font-size:14px}
+.goal b{color:var(--accent)}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{background:var(--chip-bg);color:var(--chip-fg);font-family:"Roboto Mono",monospace;font-size:11.5px;letter-spacing:.03em;padding:6px 11px;border-radius:999px}
+
+.callout{display:flex;gap:12px;background:var(--danger-bg);border:1px solid color-mix(in srgb, var(--danger) 35%, transparent);border-radius:var(--radius);padding:16px 18px;margin-top:18px}
+.callout .mark{font-family:"Oswald",sans-serif;font-weight:700;color:var(--danger);flex:0 0 auto}
+.callout ul{margin:4px 0 0;padding-left:18px;font-size:14px}
+.callout li{margin-bottom:6px}
+.callout li:last-child{margin-bottom:0}
+
+section.block{margin-top:40px}
+.block > h2{font-size:22px;margin-bottom:4px}
+.block > .sub{margin-top:4px;margin-bottom:16px}
+
+.plan-tabs{display:flex;gap:8px;background:var(--surface-2);padding:5px;border-radius:999px;width:fit-content;margin-top:18px}
+.plan-tab{appearance:none;border:0;background:transparent;color:var(--muted);font-family:"Oswald",sans-serif;text-transform:uppercase;letter-spacing:.03em;font-size:14px;font-weight:600;padding:9px 18px;border-radius:999px;cursor:pointer}
+.plan-tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
+
+.day-nav{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 18px}
+.day-btn{appearance:none;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--fg);font-family:"Roboto Mono",monospace;font-size:12.5px;padding:8px 12px;border-radius:9px;text-align:left;min-width:128px}
+.day-btn .d{display:block;color:var(--muted);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase}
+.day-btn .t{display:block;font-weight:600;margin-top:2px}
+.day-btn[aria-selected="true"]{border-color:var(--accent);background:color-mix(in srgb, var(--accent) 12%, var(--surface))}
+.day-btn[data-rest="1"]{opacity:.8}
+
+.day-panel{display:none}
+.day-panel.active{display:block}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 20px 18px}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.card-head h3{font-size:19px}
+.badge{font-family:"Roboto Mono",monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:5px 10px;border-radius:999px;font-weight:600;white-space:nowrap}
+.badge-push{background:color-mix(in srgb, var(--accent) 20%, var(--surface));color:var(--accent)}
+.badge-pull{background:color-mix(in srgb, var(--accent-2) 20%, var(--surface));color:var(--accent-2)}
+.badge-legs{background:color-mix(in srgb, var(--danger) 18%, var(--surface));color:var(--danger)}
+.badge-core{background:var(--surface-2);color:var(--muted)}
+.warmup{font-size:13.5px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.warmup b{color:var(--fg)}
+
+table.exlist{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
+table.exlist th{text-align:left;font-family:"Roboto Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0 8px 8px 0;border-bottom:1px solid var(--line)}
+table.exlist td{padding:9px 8px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+table.exlist tr:last-child td{border-bottom:none}
+.ex-name{font-weight:600}
+.ex-name-link{color:inherit;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:2px}
+.ex-name-link:hover{color:var(--accent)}
+.ex-equip{color:var(--muted);font-size:12.5px}
+.ex-sets{font-family:"Roboto Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ex-cue{color:var(--muted);font-size:12.5px}
+.finisher{margin-top:14px;background:var(--surface-2);border-radius:10px;padding:11px 14px;font-size:13.5px}
+.finisher b{font-family:"Oswald",sans-serif;text-transform:uppercase;font-size:11.5px;letter-spacing:.05em;color:var(--accent-2)}
+.rest-card{text-align:center;padding:32px 20px}
+.rest-card .badge{margin-bottom:10px}
+.rest-card p{color:var(--muted);max-width:44ch;margin:8px auto 0;font-size:14px}
+
+.notes{margin-top:16px;font-size:14px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+.notes b{color:var(--fg)}
+.notes p{margin:0 0 8px}
+.notes p:last-child{margin-bottom:0}
+
+.wl-charts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+@media (max-width:560px){.wl-charts{grid-template-columns:1fr}}
+.wl-chart-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.wl-chart-head{display:flex;align-items:center;gap:8px}
+.wl-chart-head h3{font-size:15px;flex:1}
+.wl-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.wl-dot-issac{background:var(--accent)}
+.wl-dot-wife{background:var(--accent-2)}
+.wl-latest{font-family:"Roboto Mono",monospace;font-variant-numeric:tabular-nums;font-size:13px;color:var(--muted)}
+.wl-chart-body{margin-top:10px;min-height:96px}
+.wl-chart-body svg{width:100%;height:auto;display:block}
+.wl-empty{color:var(--muted);font-size:13px;margin:0}
+
+.wl-form{margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+.wl-person-toggle{display:flex;gap:8px;background:var(--surface-2);padding:4px;border-radius:999px;width:fit-content}
+.wl-person-btn{appearance:none;border:0;background:transparent;color:var(--muted);font-family:"Oswald",sans-serif;text-transform:uppercase;letter-spacing:.03em;font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;cursor:pointer}
+.wl-person-btn.active{background:var(--accent);color:var(--accent-ink)}
+.wl-fields{display:grid;grid-template-columns:1fr 1fr 2fr;gap:12px;margin-top:14px}
+@media (max-width:560px){.wl-fields{grid-template-columns:1fr}}
+.wl-field{display:flex;flex-direction:column;gap:5px;font-size:12.5px;color:var(--muted);min-width:0}
+.wl-field input{font:inherit;font-size:14.5px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+.wl-submit{margin-top:16px;appearance:none;border:0;background:var(--accent);color:var(--accent-ink);font-family:"Oswald",sans-serif;text-transform:uppercase;letter-spacing:.03em;font-size:14px;font-weight:600;padding:10px 20px;border-radius:9px;cursor:pointer}
+.wl-submit:disabled{opacity:.6;cursor:default}
+.wl-status{margin:10px 0 0;font-size:13px;color:var(--muted);min-height:1.2em}
+.wl-status.error{color:var(--danger)}
+
+.wl-history{margin-top:22px}
+.wl-history h3{font-size:16px;margin-bottom:6px}
+.wl-del{appearance:none;border:0;background:transparent;color:var(--muted);cursor:pointer;font-family:"Roboto Mono",monospace;font-size:12px;padding:4px 8px;border-radius:6px}
+.wl-del:hover{color:var(--danger);background:var(--danger-bg)}
+.wl-del.confirm{color:var(--accent-ink);background:var(--danger)}
+.wl-badge-person{font-family:"Roboto Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.04em;padding:3px 8px;border-radius:999px}
+.wl-badge-issac{background:color-mix(in srgb, var(--accent) 20%, var(--surface));color:var(--accent)}
+.wl-badge-wife{background:color-mix(in srgb, var(--accent-2) 20%, var(--surface));color:var(--accent-2)}
+
+.ex-list{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.ex-card{background:var(--surface-2);border-radius:10px;overflow:hidden}
+.ex-card summary{display:flex;align-items:center;gap:12px;padding:10px 12px;cursor:pointer;list-style:none}
+.ex-card summary::-webkit-details-marker{display:none}
+.ex-card summary::marker{content:''}
+.ex-card summary::after{content:'+';margin-left:auto;padding-left:8px;color:var(--muted);font-family:"Roboto Mono",monospace;font-size:16px;flex:0 0 auto}
+.ex-card[open] summary::after{content:'\2013'}
+.ex-pic{flex:0 0 auto;width:48px;height:48px;background:var(--surface);border-radius:8px;padding:5px}
+.ex-pic svg{width:100%;height:100%;display:block}
+.ex-info{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:1px}
+.ex-info .ex-name{font-weight:600;font-size:14px}
+.ex-info .ex-equip{color:var(--muted);font-size:12px}
+.ex-card .ex-sets{font-size:13px;padding-left:4px}
+.ex-detail{padding:0 14px 14px 70px}
+.ex-steps{margin:0;padding-left:18px;font-size:13.5px}
+.ex-steps li{margin-bottom:5px}
+.ex-steps li:last-child{margin-bottom:0}
+.ex-cue-detail{margin:8px 0 0;font-size:12.5px;color:var(--muted)}
+.ex-cue-detail b{color:var(--fg)}
+
+footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">Home gym &middot; couples program</div>
+  <h1>Six days on, equipment you already have</h1>
+  <p class="sub">Built from a walk-through of your own gym: Smith machine, dual-pulley cable tower, pec-deck/butterfly machine, plate-loaded chest &amp; shoulder press, leg extension/curl combo, hyperextension bench, two treadmills, an upright bike, a recumbent bike, an elliptical, a stability ball and mats &mdash; plus your 20-minute badminton game.</p>
+
+  <div class="stats">
+    <div class="stat-card">
+      <h3>Issac</h3>
+      <div class="stat-row"><span>Height</span><b>183 cm</b></div>
+      <div class="stat-row"><span>Weight</span><b>135 kg</b></div>
+      <div class="goal">Goal: <b>build muscle</b> while leaning out the belly and thighs &mdash; a slow recomposition, not a crash cut.</div>
+    </div>
+    <div class="stat-card">
+      <h3>Wife</h3>
+      <div class="stat-row"><span>Height</span><b>160 cm</b></div>
+      <div class="stat-row"><span>Weight</span><b>120 kg</b></div>
+      <div class="goal">Goal: <b>reduce</b> upper arms, chest, stomach, thighs &amp; butt &mdash; worked around a sore foot sole and lower back.</div>
+    </div>
+  </div>
+
+  <div class="chips">
+    <span class="chip">Smith machine</span><span class="chip">Cable tower (high/low pulley)</span>
+    <span class="chip">Pec-deck / butterfly machine</span><span class="chip">Plate-loaded chest &amp; shoulder press</span>
+    <span class="chip">Leg extension / curl combo</span><span class="chip">Hyperextension bench</span>
+    <span class="chip">Barbell + EZ-bar + plates</span><span class="chip">2&times; treadmill</span>
+    <span class="chip">Upright bike</span><span class="chip">Recumbent bike</span>
+    <span class="chip">Elliptical</span><span class="chip">Stability ball + mats</span>
+  </div>
+
+  <div class="callout">
+    <div class="mark">Read first</div>
+    <ul>
+      <li><b>Fat loss is not local.</b> No exercise melts fat from one spot. The belly/thigh/arm shaping both of you want comes from the combined strength work + cardio below plus eating in a mild calorie deficit &mdash; the programming already targets those muscles for tone, the rest is diet and consistency.</li>
+      <li><b>Her feet:</b> no treadmill jogging and no barefoot/standing-impact work. Cardio lives on the recumbent bike and elliptical instead. Wear a cushioned, arch-support shoe even indoors, and roll the sole on a ball or bottle for a minute or two around each session.</li>
+      <li><b>Her lower back:</b> no heavy bent-over rows, no loaded spinal flexion, and the hyperextension bench is skipped in favor of seated/back-supported machines and floor core work (dead bug, bird-dog). If a move ever sparks sharp or radiating pain &mdash; not normal muscle fatigue &mdash; stop that exercise and see a doctor or physio. This plan doesn't replace one.</li>
+      <li>5 minutes of easy bike/elliptical plus light dynamic stretching before every session; a few minutes of static stretching after.</li>
+    </ul>
+  </div>
+
+  <section class="block">
+    <h2>The weekly split</h2>
+    <p class="sub">Tap a name, then a day. Tap any exercise to open its pictogram and steps.</p>
+
+    <div class="plan-tabs" role="tablist">
+      <button class="plan-tab" role="tab" aria-selected="true" data-plan="issac">Issac</button>
+      <button class="plan-tab" role="tab" aria-selected="false" data-plan="wife">Wife</button>
+    </div>
+
+    <div id="plan-root"></div>
+  </section>
+
+  <section class="block" id="weight-log">
+    <h2>Weight Log</h2>
+    <p class="sub">Logged here, synced for both of you &mdash; pull this page up on any device.</p>
+
+    <div class="wl-charts">
+      <div class="wl-chart-card" data-person="issac">
+        <div class="wl-chart-head"><span class="wl-dot wl-dot-issac"></span><h3>Issac</h3><span class="wl-latest" data-latest="issac">&mdash;</span></div>
+        <div class="wl-chart-body" data-chart="issac"><p class="wl-empty">No entries yet.</p></div>
+      </div>
+      <div class="wl-chart-card" data-person="wife">
+        <div class="wl-chart-head"><span class="wl-dot wl-dot-wife"></span><h3>Wife</h3><span class="wl-latest" data-latest="wife">&mdash;</span></div>
+        <div class="wl-chart-body" data-chart="wife"><p class="wl-empty">No entries yet.</p></div>
+      </div>
+    </div>
+
+    <form class="wl-form" id="wl-form">
+      <div class="wl-person-toggle" role="radiogroup" aria-label="Who is logging">
+        <button type="button" class="wl-person-btn active" data-person-btn="issac">Issac</button>
+        <button type="button" class="wl-person-btn" data-person-btn="wife">Wife</button>
+      </div>
+      <div class="wl-fields">
+        <label class="wl-field"><span>Date</span><input type="date" id="wl-date" required></label>
+        <label class="wl-field"><span>Weight (kg)</span><input type="number" id="wl-weight" step="0.1" min="30" max="300" required placeholder="e.g. 134.5"></label>
+        <label class="wl-field wl-field-note"><span>Note (optional)</span><input type="text" id="wl-note" maxlength="80" placeholder="e.g. after badminton"></label>
+      </div>
+      <button type="submit" class="wl-submit" id="wl-submit">Log weight</button>
+      <p class="wl-status" id="wl-status" aria-live="polite"></p>
+    </form>
+
+    <div class="wl-history">
+      <h3>History</h3>
+      <table class="exlist" id="wl-table">
+        <tr><th>Date</th><th>Person</th><th>Weight</th><th>Note</th><th></th></tr>
+      </table>
+      <p class="wl-empty" id="wl-history-empty">No entries logged yet &mdash; add your first weigh-in above.</p>
+    </div>
+  </section>
+
+  <footer>
+    Built from a walk-through of your home gym on 29 Oct 2026. Adjust loads to what feels like a 2&ndash;3 rep buffer on the last set of each exercise, and check with a doctor or physio before progressing if the foot or back pain is ongoing.
+  </footer>
+</div>
+
+<script>
+(function(){
+  // ---- tiny SVG pictogram builder ----
+  function L(x1,y1,x2,y2,o){ o=o||{}; return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+(o.c||'var(--fg)')+'" stroke-width="'+(o.w||6)+'" stroke-linecap="round"'+(o.dash?' stroke-dasharray="'+o.dash+'"':'')+'/>'; }
+  function C(cx,cy,r,o){ o=o||{}; return '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+(o.fill||'none')+'" stroke="'+(o.stroke==null?'var(--fg)':o.stroke)+'" stroke-width="'+(o.w==null?6:o.w)+'"/>'; }
+  function R(x,y,w,h,o){ o=o||{}; return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="'+(o.rx==null?4:o.rx)+'" fill="'+(o.fill||'var(--line)')+'"/>'; }
+  function FIGURE(pts){
+    var out = C(pts.head[0], pts.head[1], 8);
+    ['torso','armL','armR','legL','legR'].forEach(function(k){
+      var seg = pts[k];
+      if (!seg) return;
+      for (var i=0;i<seg.length-1;i++){ out += L(seg[i][0],seg[i][1],seg[i+1][0],seg[i+1][1]); }
+    });
+    return out;
+  }
+  function svgIcon(inner){ return '<svg viewBox="0 0 100 100" aria-hidden="true">' + inner + '</svg>'; }
+
+  var POSES = {
+    'press-horizontal': function(){ return svgIcon(R(10,78,80,8,{fill:'var(--surface-2)'}) + FIGURE({head:[24,68], torso:[[31,68],[68,68]], legL:[[68,68],[78,56],[70,44]], armL:[[40,68],[40,38]], armR:[[60,68],[60,38]]}) + L(30,36,70,36,{c:'var(--accent)',w:7})); },
+    'press-overhead': function(){ return svgIcon(R(42,86,16,7,{fill:'var(--surface-2)'}) + FIGURE({head:[50,28], torso:[[50,35],[50,64]], legL:[[50,64],[40,88]], legR:[[50,64],[60,88]], armL:[[42,42],[33,16]], armR:[[58,42],[67,16]]})); },
+    'fly': function(){ return svgIcon(FIGURE({head:[50,24], torso:[[50,31],[50,62]], legL:[[50,62],[41,88]], legR:[[50,62],[59,88]], armL:[[40,40],[18,46]], armR:[[60,40],[82,46]]}) + L(18,46,82,46,{c:'var(--accent)',w:3,dash:'3 4'})); },
+    'fly-reverse': function(){ return svgIcon(R(38,54,28,10,{fill:'var(--surface-2)'}) + FIGURE({head:[50,24], torso:[[50,31],[48,60]], legL:[[48,60],[40,88]], legR:[[48,60],[56,88]], armL:[[40,38],[16,30]], armR:[[60,38],[84,30]]})); },
+    'lateral-raise': function(){ return svgIcon(FIGURE({head:[50,18], torso:[[50,25],[50,64]], legL:[[50,64],[42,92]], legR:[[50,64],[58,92]], armL:[[40,34],[35,64]], armR:[[60,34],[85,34]]}) + L(35,64,30,92,{c:'var(--accent)',w:3,dash:'3 4'})); },
+    'triceps-pushdown': function(){ return svgIcon(FIGURE({head:[50,18], torso:[[50,25],[50,62]], legL:[[50,62],[42,90]], legR:[[50,62],[58,90]], armL:[[40,32],[38,50],[36,68]], armR:[[60,32],[62,50],[64,68]]}) + L(50,6,50,30,{c:'var(--accent)',w:3,dash:'3 4'}) + C(50,6,3,{fill:'var(--accent)',stroke:'none',w:0})); },
+    'skull-crusher': function(){ return svgIcon(R(10,78,80,8,{fill:'var(--surface-2)'}) + FIGURE({head:[24,68], torso:[[31,68],[68,68]], legL:[[68,68],[78,56],[70,44]], armL:[[40,68],[40,45],[30,37]], armR:[[60,68],[60,45],[70,37]]}) + L(28,35,72,35,{c:'var(--accent)',w:7})); },
+    'pulldown': function(){ return svgIcon(R(42,86,16,6,{fill:'var(--surface-2)'}) + FIGURE({head:[50,30], torso:[[50,37],[50,62]], legL:[[50,62],[38,78]], legR:[[50,62],[62,78]], armL:[[38,42],[25,16]], armR:[[62,42],[75,16]]}) + L(20,14,80,14,{c:'var(--accent)',w:6}) + L(50,14,50,4,{c:'var(--accent)',w:3,dash:'3 4'})); },
+    'row': function(){ return svgIcon(FIGURE({head:[28,30], torso:[[28,37],[28,58]], legL:[[28,58],[55,63],[82,60]], armL:[[33,42],[18,48]]}) + L(18,48,88,55,{c:'var(--accent)',w:3,dash:'3 4'}) + R(86,50,8,10,{fill:'var(--accent)',rx:2})); },
+    'curl': function(){ return svgIcon(FIGURE({head:[50,18], torso:[[50,25],[50,64]], legL:[[50,64],[42,92]], legR:[[50,64],[58,92]], armL:[[40,33],[40,58],[31,40]], armR:[[60,33],[62,64]]})); },
+    'squat': function(){ return svgIcon(FIGURE({head:[50,14], torso:[[50,21],[50,44]], legL:[[50,44],[35,64],[37,90]], legR:[[50,44],[65,64],[62,90]], armL:[[36,22],[30,18]], armR:[[64,22],[70,18]]}) + L(34,19,66,19,{c:'var(--accent)',w:7})); },
+    'leg-extension': function(){ return svgIcon(R(20,56,30,8,{fill:'var(--surface-2)'}) + FIGURE({head:[35,24], torso:[[35,31],[35,58]], legL:[[35,58],[55,61],[85,53]], legR:[[35,58],[40,78],[38,94]]})); },
+    'leg-curl': function(){ return svgIcon(R(20,56,30,8,{fill:'var(--surface-2)'}) + FIGURE({head:[35,24], torso:[[35,31],[35,58]], legL:[[35,58],[55,61],[46,76]], legR:[[35,58],[40,78],[38,94]]})); },
+    'deadlift-hinge': function(){ return svgIcon(FIGURE({head:[34,30], torso:[[34,37],[55,55]], legL:[[55,55],[58,75],[55,95]], armL:[[42,42],[45,66]]}) + L(35,63,60,63,{c:'var(--accent)',w:7})); },
+    'calf-raise': function(){ return svgIcon(FIGURE({head:[50,18], torso:[[50,25],[50,60]], legL:[[50,60],[45,88]], legR:[[50,60],[55,88]]}) + L(35,22,65,22,{c:'var(--accent)',w:7}) + L(38,86,62,86,{c:'var(--muted)',w:4})); },
+    'core': function(){ return svgIcon(FIGURE({head:[30,54], torso:[[37,54],[55,54]], legL:[[55,54],[65,38],[78,48]], armL:[[30,54],[24,47],[19,54]]})); },
+    'lunge': function(){ return svgIcon(FIGURE({head:[45,14], torso:[[45,21],[45,44]], legL:[[45,44],[35,64],[38,88]], legR:[[45,44],[60,68],[70,90]], armL:[[38,30],[35,50]], armR:[[52,30],[55,50]]})); },
+    'extension-back': function(){ return svgIcon(R(38,55,22,8,{fill:'var(--surface-2)'}) + FIGURE({head:[30,28], torso:[[35,35],[50,58]], legL:[[50,58],[65,75],[80,86]]})); },
+    'glute-bridge': function(){ return svgIcon(FIGURE({head:[24,70], torso:[[31,70],[55,64]], legL:[[55,64],[65,80],[65,95]], armL:[[31,70],[18,75]]})); },
+    'glute-kickback': function(){ return svgIcon(FIGURE({head:[35,20], torso:[[35,27],[35,60]], legL:[[35,60],[38,90]], legR:[[35,60],[55,70],[70,64]], armL:[[40,35],[55,30]]}) + L(70,64,85,86,{c:'var(--accent)',w:3,dash:'3 4'})); },
+    'clamshell': function(){ return svgIcon(FIGURE({head:[24,42], torso:[[31,42],[55,46]], legL:[[55,46],[65,56],[60,70]], legR:[[55,46],[70,50],[78,40]]})); },
+    'hip-abduction': function(){ return svgIcon(FIGURE({head:[35,20], torso:[[35,27],[35,60]], legL:[[35,60],[38,90]], legR:[[35,60],[60,55]], armL:[[40,35],[16,30]]}) + L(60,55,65,90,{c:'var(--accent)',w:3,dash:'3 4'})); },
+    'wall-sit': function(){ return svgIcon(L(85,8,85,96,{c:'var(--muted)',w:5}) + FIGURE({head:[55,30], torso:[[55,37],[55,55]], legL:[[55,55],[35,58],[35,86]]})); },
+    'dead-bug': function(){ return svgIcon(FIGURE({head:[50,76], torso:[[50,69],[50,56]], legL:[[50,56],[60,41],[55,26]], legR:[[50,56],[75,61]], armL:[[45,62],[25,50]], armR:[[55,62],[60,45]]})); },
+    'bird-dog': function(){ return svgIcon(FIGURE({head:[25,48], torso:[[30,50],[65,50]], legL:[[35,50],[35,78]], legR:[[60,50],[85,56]], armL:[[35,50],[15,40]]})); },
+    'rotation': function(){ return svgIcon(FIGURE({head:[50,20], torso:[[50,27],[45,45],[50,60]], legL:[[50,60],[42,90]], legR:[[50,60],[58,90]], armL:[[45,35],[75,30]]}) + L(75,30,20,13,{c:'var(--accent)',w:3,dash:'3 4'})); }
+  };
+
+  // ---- exercise library: name, pictogram, default equipment, steps ----
+  var EX = {
+    smith_flat_press: {name:'Smith machine flat bench press', pose:'press-horizontal', equip:'Smith machine + flat bench', steps:['Lie on the flat bench under the bar, feet flat on the floor, grip just wider than shoulder width.','Unrack by twisting the bar, lower it slowly to mid-chest over about 2 seconds.',"Press back up to lockout without flaring the elbows out to 90°."]},
+    smith_incline_press: {name:'Smith machine incline press', pose:'press-horizontal', equip:'Smith machine + incline bench (~30°)', steps:['Set the bench to roughly a 30° incline under the bar.','Unrack and lower the bar to your upper chest, elbows at about 45° to your torso.','Press up to lockout, keeping your shoulder blades pinned to the bench.']},
+    plate_chest_press: {name:'Plate-loaded chest press', pose:'press-horizontal', equip:'Chest/shoulder press station', steps:['Sit with your back flat against the pad, handles at chest height.','Press the handles forward until your arms are extended.','Return slowly until you feel a stretch across the chest, then press again.']},
+    plate_shoulder_press: {name:'Plate-loaded shoulder press', pose:'press-overhead', equip:'Chest/shoulder press station', steps:['Sit tall with your back against the pad, grip the handles at shoulder height.','Press straight overhead until your arms are extended, without arching your lower back.','Lower under control back to shoulder height and repeat.']},
+    pec_deck_fly: {name:'Pec-deck fly', pose:'fly', equip:'Butterfly machine', steps:['Sit with your back against the pad, forearms on the arm pads, elbows level with shoulders.','Bring your arms together in front of your chest, squeezing for a one-second hold.','Return slowly until you feel a stretch, keeping a slight bend in the elbows throughout.']},
+    pec_deck_reverse_fly: {name:'Pec-deck reverse fly', pose:'fly-reverse', equip:'Butterfly machine, facing the pad', steps:['Face the pad, chest against it, and take the handles with a slight bend in the elbows.','Pull your arms out and back, squeezing your shoulder blades together.',"Return slowly to the start without letting the weight stack slam down."]},
+    cable_crossover: {name:'Cable crossover', pose:'fly', equip:'Cable tower, both high pulleys', steps:['Stand centered between the two towers, a handle in each hand, arms out wide.','Pull your hands down and together in front of your waist, crossing slightly.','Return slowly to the start, keeping a slight bend in the elbows.']},
+    cable_lateral_raise: {name:'Cable lateral raise', pose:'lateral-raise', equip:'Cable tower, low pulley, stirrup handle', steps:['Stand side-on to the tower, handle in the far hand, arm across your body.','Raise your arm out to the side to shoulder height, leading with the elbow.','Lower slowly and repeat, then switch sides.']},
+    cable_triceps_pushdown: {name:'Cable triceps pushdown', pose:'triceps-pushdown', equip:'Cable tower, high pulley', steps:['Stand facing the tower, grip the bar or rope with elbows pinned to your sides.','Push down until your arms are fully extended, keeping the elbows still.','Let the weight rise slowly back to about 90° and repeat.']},
+    ez_skull_crusher: {name:'EZ-bar skull crusher', pose:'skull-crusher', equip:'EZ-bar + flat bench', steps:['Lie on the bench holding the EZ-bar straight above your chest.','Bend only at the elbows to lower the bar toward your forehead.','Extend your arms back to the start without moving your upper arms.']},
+    lat_pulldown: {name:'Lat pulldown', pose:'pulldown', equip:'Cable tower, high pulley, lat bar', steps:['Sit with your thighs secured under the pad, grip the bar wider than shoulder width.','Pull the bar down to your upper chest, driving your elbows down and back.','Let the bar rise slowly back to full stretch and repeat.']},
+    seated_cable_row: {name:'Seated cable row', pose:'row', equip:'Cable tower, low pulley', steps:['Sit with knees slightly bent, feet on the platform, and take the handle with arms extended.','Pull the handle to your stomach, squeezing your shoulder blades together, chest up.','Extend your arms back out slowly without rounding your lower back.']},
+    ez_bar_curl: {name:'EZ-bar curl', pose:'curl', equip:'EZ-bar + plates', steps:['Stand holding the EZ-bar on the angled grips, elbows tucked at your sides.','Curl the bar up toward your shoulders without swinging your hips.','Lower slowly back to a straight-arm position and repeat.']},
+    cable_curl: {name:'Cable curl', pose:'curl', equip:'Cable tower, low pulley', steps:['Stand facing the tower, grip the handle with your elbow close to your side.','Curl the handle up toward your shoulder, keeping your elbow still.','Lower under control, keeping tension on the cable throughout.']},
+    smith_squat: {name:'Smith machine squat', pose:'squat', equip:'Smith machine', steps:['Set the bar at upper-back height, step under it and rest it across your traps.','Unrack, feet roughly shoulder-width apart, and sit back and down until thighs are at least parallel.','Drive through your heels back up to standing.']},
+    leg_extension: {name:'Leg extension', pose:'leg-extension', equip:'Leg extension/curl machine', steps:["Sit with the pad resting on the front of your lower shins, knees in line with the machine's pivot.",'Extend your legs until straight, pausing briefly at the top.','Lower slowly back to the start without letting the stack bounce.']},
+    leg_curl: {name:'Leg curl', pose:'leg-curl', equip:'Leg extension/curl machine', steps:['Position yourself so the pad sits just above your heels, as the machine directs.','Curl your heels toward your glutes, squeezing your hamstrings.','Lower slowly back to the start and repeat.']},
+    leg_ext_curl_superset: {name:'Leg extension / leg curl superset', pose:'leg-extension', equip:'Leg extension/curl machine', steps:['Do a set of leg extensions straight through to the rep target.','Swing straight into leg curls on the same machine with no rest.','That pair is one set — rest briefly, then repeat.']},
+    smith_rdl: {name:'Smith machine Romanian deadlift', pose:'deadlift-hinge', equip:'Smith machine', steps:['Stand with the bar at hip height, feet hip-width apart, knees softly bent.','Push your hips back and lower the bar along your thighs, keeping your back flat.','Feel a stretch in your hamstrings, then drive your hips forward to stand back up.']},
+    calf_raise: {name:'Standing calf raise', pose:'calf-raise', equip:'Smith machine, toes on a plate', steps:['Stand with the balls of your feet on a raised plate, bar across your upper back.','Rise onto your toes as high as you can, pausing briefly at the top.','Lower your heels below the plate for a full stretch, then repeat.']},
+    walking_lunge: {name:'Walking lunges', pose:'lunge', equip:'Open floor, bodyweight or light plates', steps:['Stand tall, then step forward into a long stride.','Lower until both knees are close to 90°, back knee just above the floor.','Push off the front foot to bring your back leg through into the next step.']},
+    hyperextension: {name:'Hyperextension', pose:'extension-back', equip:'Hyperextension bench', steps:['Position your hips on the pad with your ankles secured, body hinged forward.',"Raise your torso until it's in a straight line — don't overextend backward.",'Lower slowly and controlled back to the start.']},
+    glute_bridge: {name:'Glute bridge', pose:'glute-bridge', equip:'Mat', steps:['Lie on your back, knees bent, feet flat, hip-width apart.','Drive through your heels to lift your hips until your body forms a straight line from knees to shoulders.','Squeeze your glutes at the top, then lower slowly.']},
+    single_leg_glute_bridge: {name:'Single-leg glute bridge', pose:'glute-bridge', equip:'Mat', steps:['Lie on your back, one foot flat on the floor, the other leg extended straight.','Drive through the planted heel to lift your hips, keeping them level.','Lower slowly, complete your reps, then switch legs.']},
+    cable_glute_kickback: {name:'Cable glute kickback', pose:'glute-kickback', equip:'Cable tower, low pulley, ankle strap', steps:['Attach the ankle strap and face the tower, holding it for balance.','Keeping a soft bend in the knee, kick your leg straight back and up.','Return slowly to the start, then complete your reps on that side.']},
+    clamshell: {name:'Clamshells', pose:'clamshell', equip:'Mat, bodyweight or band', steps:['Lie on your side, knees bent in front of you, heels in line with your back.','Keeping your feet together, open your top knee like a clamshell.','Lower slowly without letting your hips roll back.']},
+    cable_hip_abduction: {name:'Standing cable hip abduction', pose:'hip-abduction', equip:'Cable tower, ankle strap', steps:['Attach the ankle strap to the low pulley and stand side-on, holding the frame for balance.','Keeping your leg straight, lift it out to the side away from the tower.','Lower slowly and complete your reps, then switch sides.']},
+    wall_squat_ball: {name:'Stability-ball wall squat', pose:'wall-sit', equip:'Stability ball between back and wall', steps:['Place the ball between your lower back and the wall, feet a half-step forward.','Bend your knees to lower into a squat, letting the ball roll with you.','Hold briefly at the bottom, then push back up to standing.']},
+    dead_bug: {name:'Dead bug', pose:'dead-bug', equip:'Mat', steps:['Lie on your back, arms reaching toward the ceiling, knees bent at 90° above your hips.','Press your lower back flat into the mat, then slowly extend one arm and the opposite leg.','Return to the start and switch sides, keeping your back flat throughout.']},
+    bird_dog: {name:'Bird-dog', pose:'bird-dog', equip:'Mat', steps:['Start on all fours, hands under shoulders, knees under hips.','Extend one arm forward and the opposite leg back, keeping your hips level.','Return to the start under control and switch sides.']},
+    pelvic_curl_up: {name:'Pelvic tilt → supported mini curl-up', pose:'core', equip:'Flat bench, short range', steps:['Lie on the bench, knees bent, feet flat.','Flatten your lower back by tilting your pelvis, then curl your shoulders just a few inches off the bench.','Lower back down slowly — this is a small range, not a full sit-up.']},
+    cable_woodchop: {name:'Standing cable woodchop', pose:'rotation', equip:'Cable tower, high-to-low or low-to-high', steps:['Stand side-on to the tower, feet shoulder-width apart, both hands on the handle.','Rotate your torso and hips to pull the handle across your body.','Return under control to the start, then complete all reps before switching sides.']},
+    core_circuit_a: {name:'Core circuit — 2 rounds', pose:'core', equip:'Mat + cable tower', steps:['Hold a plank for 45 seconds.','Go straight into 12 cable woodchops per side.','Finish with 15 bicycle crunches per side, rest briefly, then repeat for 2 rounds total.']},
+    core_circuit_b: {name:'Core burnout — 3 rounds', pose:'core', equip:'Mat + cable tower', steps:['Hold a plank for 45 seconds.','Go straight into 20 bicycle crunches.','Finish with 12 cable woodchops per side, then repeat for 3 rounds total, resting as little as possible between moves.']}
+  };
+
+  // ---- weekly plans ----
+  var PLANS = {
+    issac: { label:'Issac', days:[
+      {id:'i1', short:'Day 1', title:'Push A', sub:'Chest, Shoulders, Triceps', badge:'push', badgeLabel:'Push',
+        warmup:'5 min easy bike + arm circles + band/cable pull-aparts.',
+        exercises:[
+          {key:'smith_flat_press', sets:'4 × 8–10', cue:'2s down, drive up'},
+          {key:'plate_shoulder_press', sets:'3 × 10–12', cue:"Don't lock out hard"},
+          {key:'pec_deck_fly', sets:'3 × 12–15', cue:'1s squeeze at the front'},
+          {key:'cable_lateral_raise', sets:'3 × 15/side', cue:'Lead with the elbow'},
+          {key:'cable_triceps_pushdown', sets:'3 × 12–15', cue:'Elbows pinned to ribs'}
+        ], finisherLabel:'Cardio finisher', finisher:'Treadmill incline walk — 12 min at 10–12% incline, brisk pace.'},
+      {id:'i2', short:'Day 2', title:'Pull A', sub:'Back, Biceps', badge:'pull', badgeLabel:'Pull',
+        warmup:'5 min row/bike + towel shoulder dislocates.',
+        exercises:[
+          {key:'lat_pulldown', sets:'4 × 10–12', cue:'Pull to upper chest'},
+          {key:'seated_cable_row', sets:'3 × 10–12', cue:'Chest up, squeeze shoulder blades'},
+          {key:'pec_deck_reverse_fly', sets:'3 × 12–15', cue:'Rear delts, not traps'},
+          {key:'ez_bar_curl', sets:'3 × 10–12', cue:'No swinging'},
+          {key:'cable_curl', sets:'3 × 12', cue:'Constant tension at the bottom'}
+        ], finisherLabel:'Cardio finisher', finisher:'Elliptical — 12–15 min, moderate steady pace.'},
+      {id:'i3', short:'Day 3', title:'Legs A', sub:'+ Core', badge:'legs', badgeLabel:'Legs',
+        warmup:'5 min bike, bodyweight squats, leg swings.',
+        exercises:[
+          {key:'smith_squat', sets:'4 × 10', cue:'Full depth, braced core'},
+          {key:'leg_extension', sets:'3 × 15', cue:'Pause at the top'},
+          {key:'leg_curl', sets:'3 × 15', cue:"Don't rush the eccentric"},
+          {key:'smith_rdl', sets:'3 × 10', cue:'Flat back, light-moderate load'},
+          {key:'core_circuit_a', sets:'2 rounds', cue:'Minimal rest between moves'}
+        ], finisherLabel:"Cardio finisher — today's main fat-burning slot", finisher:'Incline treadmill, 18–20 min steady state. The belly/thigh leaning out comes from this + your diet, not from adding more leg sets.'},
+      {id:'i4', short:'Day 4', title:'Push B', sub:'Chest, Shoulders, Triceps', badge:'push', badgeLabel:'Push',
+        warmup:'Same as Day 1.',
+        exercises:[
+          {key:'smith_incline_press', sets:'4 × 8–10', cue:'Bench ~30°'},
+          {key:'plate_chest_press', sets:'3 × 10', cue:'Full stretch, controlled'},
+          {key:'cable_crossover', sets:'3 × 12–15', cue:'Cross hands slightly at bottom'},
+          {key:'plate_shoulder_press', sets:'3 × 10–12', cue:''},
+          {key:'ez_skull_crusher', sets:'3 × 10–12', cue:'Elbows stay still'}
+        ], finisherLabel:'Cardio finisher', finisher:'Upright bike intervals — 12 min, 1 min hard / 1 min easy × 6.'},
+      {id:'i5', short:'Day 5', title:'Pull B', sub:'Back, Biceps', badge:'pull', badgeLabel:'Pull',
+        warmup:'Same as Day 2.',
+        exercises:[
+          {key:'seated_cable_row', name:'Seated cable row, wide grip', sets:'4 × 10', cue:'Pull to the lower ribs'},
+          {key:'lat_pulldown', name:'Lat pulldown, close/underhand grip', sets:'3 × 12', cue:''},
+          {key:'pec_deck_reverse_fly', sets:'3 × 15', cue:''},
+          {key:'ez_bar_curl', sets:'3 × 10', cue:''},
+          {key:'hyperextension', sets:'3 × 12', cue:'Slow and controlled — builds the lower back'}
+        ], finisherLabel:'Cardio finisher', finisher:'Treadmill — 12 min brisk incline walk.'},
+      {id:'i6', short:'Day 6', title:'Legs B', sub:'+ Full-Body Finisher', badge:'legs', badgeLabel:'Legs',
+        warmup:'5 min bike, bodyweight lunges.',
+        exercises:[
+          {key:'smith_squat', name:'Smith machine squat, slightly wider stance', sets:'4 × 10', cue:''},
+          {key:'walking_lunge', sets:'3 × 12/leg', cue:'Knee tracks over toe'},
+          {key:'leg_ext_curl_superset', sets:'3 × 15 each', cue:'No rest between the pair'},
+          {key:'calf_raise', sets:'3 × 20', cue:''},
+          {key:'core_circuit_b', sets:'3 rounds', cue:'Minimal rest'}
+        ], finisherLabel:'Cardio finisher', finisher:'20 min moderate cardio, your pick — treadmill, upright bike or elliptical.'},
+      {id:'i7', short:'Day 7', title:'Rest', rest:true, restText:"Your 20-minute badminton game covers today's cardio. Stretch, hydrate, and get a full night's sleep — the muscle gets built on this day, not in the gym."}
+    ], notes:[
+      '<b>Progression:</b> once every set hits the top of its rep range with good form, add 2.5–5% load or one rep the following week.',
+      '<b>On fat loss:</b> the belly and thigh leaning you want comes from the weekly deficit and total activity, not from extra direct sets — this volume is already enough per muscle.',
+      "<b>Protein:</b> aim for roughly 1.6–2 g per kg of your target bodyweight, spread across meals, to support the muscle-building side of this while you're in a deficit."
+    ]},
+    wife: { label:'Wife', days:[
+      {id:'w1', short:'Day 1', title:'Chest & Shoulders', sub:'seated', badge:'push', badgeLabel:'Upper',
+        warmup:'5 min recumbent bike + arm circles.',
+        exercises:[
+          {key:'plate_chest_press', name:'Plate-loaded chest press (seated)', sets:'3 × 12', cue:'Back flat against the pad'},
+          {key:'pec_deck_fly', sets:'3 × 15', cue:'Light weight, full squeeze'},
+          {key:'plate_shoulder_press', name:'Plate-loaded shoulder press (seated)', sets:'3 × 12', cue:'Stop short of lockout'},
+          {key:'cable_lateral_raise', sets:'3 × 15', cue:'Feet planted, no swaying'},
+          {key:'cable_triceps_pushdown', sets:'3 × 15', cue:'Targets the back of the upper arm'}
+        ], finisherLabel:'Cardio', finisher:'Recumbent bike — 15–20 min, easy-moderate. Seat supports the back, pedals keep weight off the sole.'},
+      {id:'w2', short:'Day 2', title:'Thighs & Glutes', badge:'legs', badgeLabel:'Lower',
+        warmup:'5 min elliptical + hip circles.',
+        exercises:[
+          {key:'leg_extension', name:'Leg extension (seated)', sets:'3 × 15', cue:''},
+          {key:'leg_curl', name:'Leg curl (seated)', sets:'3 × 15', cue:''},
+          {key:'glute_bridge', sets:'3 × 15', cue:'Squeeze glutes at the top'},
+          {key:'cable_glute_kickback', sets:'3 × 15/leg', cue:'Hold the frame for balance'},
+          {key:'clamshell', sets:'2 × 15/side', cue:'Gentle, back-friendly glute work'}
+        ], finisherLabel:'Cardio', finisher:'Elliptical — 15–20 min. Zero impact on the sole.'},
+      {id:'w3', short:'Day 3', title:'Core & Back Care', badge:'core', badgeLabel:"Don't skip",
+        warmup:'5 min recumbent bike.',
+        exercises:[
+          {key:'dead_bug', sets:'3 × 10/side', cue:'Slow, no arching'},
+          {key:'bird_dog', sets:'3 × 10/side', cue:'Hips stay level'},
+          {key:'pelvic_curl_up', sets:'3 × 15', cue:"Small range — this isn't a sit-up"},
+          {key:'wall_squat_ball', sets:'3 × 10, hold 5s', cue:'Ball does the back support'},
+          {key:'cable_woodchop', sets:'3 × 12/side', cue:'Rotate from the hips, not the low back'}
+        ], finisherLabel:'Foot care, every time today', finisher:'Roll each sole on a ball or bottle, 2 min/side. Calf stretch against the wall, 30s × 2/side.<br><br><b>Cardio</b><br>Recumbent bike or a flat, slow treadmill walk — 15 min.'},
+      {id:'w4', short:'Day 4', title:'Back & Arms', badge:'pull', badgeLabel:'Upper',
+        warmup:'5 min elliptical.',
+        exercises:[
+          {key:'seated_cable_row', sets:'3 × 12', cue:"Back supported, don't lean back hard"},
+          {key:'lat_pulldown', name:'Lat pulldown — light-moderate', sets:'3 × 12', cue:''},
+          {key:'pec_deck_reverse_fly', sets:'3 × 15', cue:''},
+          {key:'cable_curl', name:'Cable biceps curl', sets:'3 × 15', cue:''},
+          {key:'cable_triceps_pushdown', sets:'3 × 15', cue:''}
+        ], finisherLabel:'Cardio', finisher:'Elliptical — 15–20 min.'},
+      {id:'w5', short:'Day 5', title:'Thighs & Glutes II', badge:'legs', badgeLabel:'Lower',
+        warmup:'5 min recumbent bike.',
+        exercises:[
+          {key:'leg_extension', sets:'3 × 15', cue:''},
+          {key:'leg_curl', sets:'3 × 15', cue:''},
+          {key:'single_leg_glute_bridge', sets:'3 × 10/side', cue:''},
+          {key:'cable_glute_kickback', sets:'3 × 15/leg', cue:''},
+          {key:'cable_hip_abduction', sets:'2 × 15/leg', cue:''}
+        ], finisherLabel:'Cardio', finisher:'Recumbent bike intervals — 15 min, 2 min easy / 1 min a bit harder.'},
+      {id:'w6', short:'Day 6', title:'Full-Body Circuit', badge:'core', badgeLabel:'Circuit',
+        warmup:'5 min elliptical.',
+        exercises:[
+          {key:'plate_chest_press', name:'Seated chest press', sets:'3 rounds × 40s', cue:'Circuit — straight into the next move, 20s rest after all 5'},
+          {key:'seated_cable_row', sets:'3 rounds × 40s', cue:''},
+          {key:'leg_extension', sets:'3 rounds × 40s', cue:''},
+          {key:'glute_bridge', sets:'3 rounds × 40s', cue:''},
+          {key:'cable_woodchop', sets:'3 rounds × 40s/side', cue:'Keep it light; this is about pace, not load'}
+        ], finisherLabel:'Cool-down', finisher:'Elliptical or recumbent bike, 10 min easy, then a full stretch and sole rolling.'},
+      {id:'w7', short:'Day 7', title:'Rest', rest:true, restText:'A light, social 20-minute badminton game is plenty today. Spend the rest of the day on calf and foot stretches, and get to bed early.'}
+    ], notes:[
+      '<b>Progression:</b> add one rep or a small amount of weight every 1–2 weeks — never by pushing through foot or back pain.',
+      '<b>On shaping:</b> toning the arms, chest, stomach, thighs and butt happens through this strength work plus the cardio and a calorie deficit together — no exercise burns fat from one spot on its own.',
+      '<b>Shoes:</b> wear a proper cushioned, arch-support shoe for every session, badminton included — not just around the house.'
+    ]}
+  };
+
+  // ---- render ----
+  var currentPlan = 'issac';
+  var currentDay = { issac: 'i1', wife: 'w1' };
+
+  function exCardHTML(ex){
+    var def = EX[ex.key];
+    var name = ex.name || def.name;
+    var equip = ex.equip || def.equip;
+    var pic = POSES[def.pose] ? POSES[def.pose]() : '';
+    var stepsHTML = def.steps.map(function(s){ return '<li>'+s+'</li>'; }).join('');
+    var nameHTML = '<a class="ex-name-link" href="https://www.google.com/search?tbm=isch&q='+encodeURIComponent(name)+'" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">'+name+'</a>';
+    return '<details class="ex-card"><summary>' +
+        '<span class="ex-pic">'+pic+'</span>' +
+        '<span class="ex-info"><span class="ex-name">'+nameHTML+'</span><span class="ex-equip">'+equip+'</span></span>' +
+        '<span class="ex-sets">'+ex.sets+'</span>' +
+      '</summary><div class="ex-detail">' +
+        '<ol class="ex-steps">'+stepsHTML+'</ol>' +
+        (ex.cue ? '<p class="ex-cue-detail"><b>Cue</b> '+ex.cue+'</p>' : '') +
+      '</div></details>';
+  }
+
+  function dayPanelHTML(day){
+    if (day.rest){
+      return '<div class="card rest-card"><span class="badge badge-core">Rest</span><h3>Recover</h3><p>'+day.restText+'</p></div>';
+    }
+    var titleLine = day.title + (day.sub ? ' &mdash; ' + day.sub : '');
+    var exercisesHTML = day.exercises.map(exCardHTML).join('');
+    return '<div class="card">' +
+        '<div class="card-head"><h3>'+titleLine+'</h3><span class="badge badge-'+day.badge+'">'+day.badgeLabel+'</span></div>' +
+        '<div class="warmup"><b>Warm-up:</b> '+day.warmup+'</div>' +
+        '<div class="ex-list">'+exercisesHTML+'</div>' +
+        '<div class="finisher"><b>'+day.finisherLabel+'</b><br>'+day.finisher+'</div>' +
+      '</div>';
+  }
+
+  function dayNavHTML(plan, selectedId){
+    return '<div class="day-nav" role="tablist">' + plan.days.map(function(d){
+      return '<button type="button" class="day-btn" data-day="'+d.id+'" '+(d.rest?'data-rest="1" ':'')+'aria-selected="'+(d.id===selectedId)+'"><span class="d">'+d.short+'</span><span class="t">'+d.title+'</span></button>';
+    }).join('') + '</div>';
+  }
+
+  function notesHTML(plan){
+    return '<div class="notes">' + plan.notes.map(function(n){ return '<p>'+n+'</p>'; }).join('') + '</div>';
+  }
+
+  function render(){
+    var plan = PLANS[currentPlan];
+    var dayId = currentDay[currentPlan];
+    var day = plan.days.filter(function(d){ return d.id === dayId; })[0] || plan.days[0];
+    var root = document.getElementById('plan-root');
+    root.innerHTML = dayNavHTML(plan, day.id) + '<div class="day-panel active">' + dayPanelHTML(day) + '</div>' + notesHTML(plan);
+    Array.from(root.querySelectorAll('.day-btn')).forEach(function(btn){
+      btn.addEventListener('click', function(){
+        currentDay[currentPlan] = btn.getAttribute('data-day');
+        render();
+      });
+    });
+  }
+
+  Array.from(document.querySelectorAll('.plan-tab')).forEach(function(btn){
+    btn.addEventListener('click', function(){
+      currentPlan = btn.getAttribute('data-plan');
+      document.querySelectorAll('.plan-tab').forEach(function(b){ b.setAttribute('aria-selected', String(b === btn)); });
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
+
+<script>
+(function(){
+  var state = { person: 'issac', db: null, entries: [], confirmDeleteId: null };
+
+  function fmtDate(iso){
+    var d = new Date(iso + 'T00:00:00');
+    if (isNaN(d)) return iso;
+    return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  }
+
+  function setStatus(msg, isError){
+    var el = document.getElementById('wl-status');
+    if (!el) return;
+    el.textContent = msg || '';
+    el.classList.toggle('error', !!isError);
+  }
+
+  function renderChart(person){
+    var body = document.querySelector('.wl-chart-body[data-chart="' + person + '"]');
+    var latestEl = document.querySelector('.wl-latest[data-latest="' + person + '"]');
+    if (!body) return;
+    var pts = state.entries.filter(function(e){ return e.person === person; })
+      .slice().sort(function(a,b){ return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+    if (pts.length === 0){
+      body.innerHTML = '<p class="wl-empty">No entries yet.</p>';
+      if (latestEl) latestEl.textContent = '—';
+      return;
+    }
+    var last = pts[pts.length - 1];
+    if (latestEl) latestEl.textContent = last.weightKg.toFixed(1) + ' kg';
+    if (pts.length === 1){
+      body.innerHTML = '<p class="wl-empty">First entry logged ' + fmtDate(last.date) + '. One more and a trend line appears.</p>';
+      return;
+    }
+    var w = 280, h = 96, padL = 34, padR = 10, padT = 10, padB = 20;
+    var weights = pts.map(function(p){ return p.weightKg; });
+    var min = Math.min.apply(null, weights), max = Math.max.apply(null, weights);
+    if (min === max){ min -= 1; max += 1; }
+    var range = max - min;
+    var x = function(i){ return padL + (i / (pts.length - 1)) * (w - padL - padR); };
+    var y = function(v){ return padT + (1 - (v - min) / range) * (h - padT - padB); };
+    var color = person === 'issac' ? 'var(--accent)' : 'var(--accent-2)';
+    var linePts = pts.map(function(p,i){ return x(i).toFixed(1) + ',' + y(p.weightKg).toFixed(1); }).join(' ');
+    var areaPts = linePts + ' ' + x(pts.length-1).toFixed(1) + ',' + (h-padB) + ' ' + x(0).toFixed(1) + ',' + (h-padB);
+    var dots = pts.map(function(p,i){
+      return '<circle cx="' + x(i).toFixed(1) + '" cy="' + y(p.weightKg).toFixed(1) + '" r="3" fill="' + color + '"></circle>';
+    }).join('');
+    var svg = '' +
+      '<svg viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="' + person + ' weight trend">' +
+      '<polygon points="' + areaPts + '" fill="' + color + '" opacity="0.12"></polygon>' +
+      '<polyline points="' + linePts + '" fill="none" stroke="' + color + '" stroke-width="2"></polyline>' +
+      dots +
+      '<text x="2" y="' + (y(max)+4).toFixed(1) + '" font-size="9" fill="var(--muted)">' + max.toFixed(1) + '</text>' +
+      '<text x="2" y="' + (y(min)+4).toFixed(1) + '" font-size="9" fill="var(--muted)">' + min.toFixed(1) + '</text>' +
+      '<text x="' + x(0).toFixed(1) + '" y="' + (h-4) + '" font-size="9" fill="var(--muted)">' + fmtDate(pts[0].date) + '</text>' +
+      '<text x="' + x(pts.length-1).toFixed(1) + '" y="' + (h-4) + '" font-size="9" fill="var(--muted)" text-anchor="end">' + fmtDate(pts[pts.length-1].date) + '</text>' +
+      '</svg>';
+    body.innerHTML = svg;
+  }
+
+  function renderHistory(){
+    var table = document.getElementById('wl-table');
+    var empty = document.getElementById('wl-history-empty');
+    if (!table) return;
+    while (table.rows.length > 1) table.deleteRow(1);
+    var sorted = state.entries.slice().sort(function(a,b){ return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
+    empty.hidden = sorted.length > 0;
+    sorted.forEach(function(e){
+      var tr = table.insertRow();
+      var tdDate = tr.insertCell(); tdDate.textContent = fmtDate(e.date);
+      var tdPerson = tr.insertCell();
+      var badge = document.createElement('span');
+      badge.className = 'wl-badge-person wl-badge-' + e.person;
+      badge.textContent = e.person === 'issac' ? 'Issac' : 'Wife';
+      tdPerson.appendChild(badge);
+      var tdWeight = tr.insertCell(); tdWeight.className = 'ex-sets'; tdWeight.textContent = e.weightKg.toFixed(1) + ' kg';
+      var tdNote = tr.insertCell(); tdNote.className = 'ex-cue'; tdNote.textContent = e.note || '';
+      var tdDel = tr.insertCell();
+      var delBtn = document.createElement('button');
+      delBtn.type = 'button'; delBtn.className = 'wl-del'; delBtn.textContent = 'Remove';
+      delBtn.addEventListener('click', function(){ handleDelete(e.id, delBtn); });
+      tdDel.appendChild(delBtn);
+    });
+  }
+
+  function renderAll(){
+    renderChart('issac');
+    renderChart('wife');
+    renderHistory();
+  }
+
+  function handleDelete(id, btn){
+    if (state.confirmDeleteId !== id){
+      state.confirmDeleteId = id;
+      btn.textContent = 'Sure?';
+      btn.classList.add('confirm');
+      setTimeout(function(){
+        if (state.confirmDeleteId === id){
+          state.confirmDeleteId = null;
+          btn.textContent = 'Remove';
+          btn.classList.remove('confirm');
+        }
+      }, 3000);
+      return;
+    }
+    state.confirmDeleteId = null;
+    if (!state.db) return;
+    state.db.collection('weights').doc(id).delete().catch(function(err){
+      setStatus('Could not remove that entry (' + (err && err.code || 'error') + ').', true);
+    });
+  }
+
+  function wirePersonToggle(){
+    var btns = document.querySelectorAll('.wl-person-btn');
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){
+        state.person = b.getAttribute('data-person-btn');
+        btns.forEach(function(x){ x.classList.toggle('active', x === b); });
+      });
+    });
+  }
+
+  function wireForm(){
+    var form = document.getElementById('wl-form');
+    var dateInput = document.getElementById('wl-date');
+    var today = new Date().toISOString().slice(0,10);
+    if (dateInput && !dateInput.value) dateInput.value = today;
+    form.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      if (!state.db){ setStatus('Sign in to this artifact to log a weight.', true); return; }
+      var weightVal = parseFloat(document.getElementById('wl-weight').value);
+      var dateVal = document.getElementById('wl-date').value || today;
+      var noteVal = document.getElementById('wl-note').value.trim().slice(0, 80);
+      if (!weightVal || weightVal < 30 || weightVal > 300){
+        setStatus('Enter a weight between 30 and 300 kg.', true);
+        return;
+      }
+      var submitBtn = document.getElementById('wl-submit');
+      submitBtn.disabled = true;
+      setStatus('Saving…');
+      state.db.collection('weights').add({
+        person: state.person,
+        date: dateVal,
+        weightKg: weightVal,
+        note: noteVal,
+        loggedAt: new Date().toISOString()
+      }).then(function(){
+        setStatus('Logged.');
+        document.getElementById('wl-weight').value = '';
+        document.getElementById('wl-note').value = '';
+      }).catch(function(err){
+        setStatus('Could not save (' + (err && err.code || 'error') + '). ' + (err && err.code === 'invalid_argument' ? 'You may be in view-only mode.' : 'Try again.'), true);
+      }).finally(function(){
+        submitBtn.disabled = false;
+      });
+    });
+  }
+
+  async function init(){
+    wirePersonToggle();
+    wireForm();
+    if (!window.claude || !window.claude.use){
+      setStatus('Weight log needs the Claude app to sync.', true);
+      return;
+    }
+    var db = await window.claude.use('db');
+    if (!db){
+      setStatus('Sign in to this artifact to log and see weights here.', true);
+      return;
+    }
+    state.db = db;
+    db.collection('weights').orderBy('date', 'desc').limit(500).onSnapshot(function(snap){
+      state.entries = snap.docs.map(function(d){
+        var data = d.data() || {};
+        return { id: d.id, person: data.person, date: data.date, weightKg: Number(data.weightKg), note: data.note };
+      }).filter(function(e){ return e.person === 'issac' || e.person === 'wife'; });
+      renderAll();
+    }, function(err){
+      setStatus('Live sync error (' + err.code + ').', true);
+    });
+  }
+
+  init();
+})();
+</script>
+
+</body></html>
